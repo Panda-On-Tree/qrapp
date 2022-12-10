@@ -116,7 +116,7 @@ function Login() {
                             }}  />
                         </div>
                         <div className='logi-forget-link'>
-                            <a   href="/ess/forget-password">Forgot Password?</a>
+                            
                         </div>
                     </div>
                     <div className='logi-buttons-main'>
