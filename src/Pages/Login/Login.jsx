@@ -52,9 +52,36 @@ function Login() {
                 },
                 data,
               }) */
+              const data = {
+                employee_id: response.data.new_e_code
+              }
+              axios({
+                method:"post",
+                url:`https://internal.microtek.tech:8443/v1/api/mhere/get-employee-module-access`,
+                headers:{
+                  "Content-Type": "application/json",
+                  "Authorization": `Bearer ${localStorage.getItem('token')}`
+                },
+                data
+              })
+              .then((res)=>{
+                console.log(res);
+                if(res.data.data?.qrapp){
+                    navigate('/')
+                    window.location.reload()
+                }
+                else{
+                    alert("module access not allowed")
+                    document.getElementById("login-button").disabled = false
+                }
+                //localStorage.setItem('module_access', JSON.stringify(res.data.data))
+              })
+              .catch((err)=>{
+                  document.getElementById("login-button").disabled = false
+                console.log(err);
+              })
             
-            navigate('/')
-            window.location.reload()
+           
           })
           .catch(function (err) {
             console.log(err)
