@@ -41,6 +41,7 @@ function QrSheet() {
       /> */}
             <div className="qr-buttons">
                 <input
+                    className="custom-file-input"
                     type="file"
                     name=""
                     id=""
@@ -49,14 +50,14 @@ function QrSheet() {
                     }}
                 />
                 <button
-                    className="print-button"
+                    className="print-button button"
                     onClick={() => {
                         window.print();
                     }}>
                     Print
                 </button>
                 <button
-                    className="logout-button"
+                    className="logout-button button"
                     onClick={() => {
                         localStorage.clear();
                         navigate('/login')

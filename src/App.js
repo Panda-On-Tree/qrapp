@@ -28,6 +28,17 @@ function App() {
         ></Route>
       <Route
           exact
+          path=""
+          element={
+            localStorage.getItem('token') ? (
+              <QrSheet />
+            ) : (
+              <Navigate replace to="/login" />
+            )
+          }
+        ></Route>
+      <Route
+          exact
           path="/login"
           element={
             <Login />

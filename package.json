@@ -1,5 +1,6 @@
 {
   "name": "qr_code_gen",
+  "homepage": "/qrapp",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
