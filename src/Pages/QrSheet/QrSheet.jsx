@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import * as xlsx from "xlsx";
 import "./QrSheet.css";
 //import QRcode from "react-qr-code";
@@ -6,14 +6,22 @@ import ReactToPrint from "react-to-print";
 import { useNavigate } from 'react-router-dom';
 import {QRCodeSVG} from 'qrcode.react';
 import logo from "./assets/logo2.png";
+import axios from "axios";
+import { baseurl } from "../../api/apiConfig";
 function QrSheet() {
     const [col, setCol] = useState();
     const [file, setFile] = useState([]);
+   const [uploadFile, setUploadFile] = useState()
     let navigate = useNavigate()
+
+   const value = useRef(false)
+
+   
 
     const readUploadFile = (e) => {
         e.preventDefault();
         if (e.target.files) {
+      
             const reader = new FileReader();
             reader.onload = (e) => {
                 const data = e.target.result;
@@ -33,6 +41,33 @@ function QrSheet() {
     };
     const componentRef = useRef();
 
+        function upload(){
+            console.log(uploadFile);
+            var formdata = new FormData();
+            formdata.append("employee_id",localStorage.getItem("employee_id"))
+            formdata.append("qrcode_file",uploadFile)
+            for (const value of formdata.values()) {
+                console.log(value);
+              }
+            axios({
+                method:"post",
+                url:`${baseurl.base_url}/mhere/log-qr-file`,
+                headers:{
+                  "Content-Type": "multipart/formdata",
+                  "Authorization": `Bearer ${localStorage.getItem('token')}`
+                },
+                data:formdata
+              })
+              .then((res)=>{
+                console.log(res);
+              })  
+              .catch((err)=>{
+                console.log(err);
+              })
+        }
+
+
+
     return (
         <div className="qr-sheet-main">
             {/*   <ReactToPrint
@@ -44,15 +79,20 @@ function QrSheet() {
                     className="custom-file-input"
                     type="file"
                     name=""
-                    id=""
+                    id="file-input"
                     onChange={(e) => {
                         readUploadFile(e);
+                       
+                        setUploadFile(e.target.files[0])
+                        
                     }}
                 />
                 <button
                     className="print-button button"
                     onClick={() => {
                         window.print();
+                        upload()
+                       
                     }}>
                     Print
                 </button>

@@ -4,6 +4,7 @@ import { useState } from 'react'
 import './Login.css'
 import axios from 'axios'
 import { useNavigate } from 'react-router-dom';
+import { baseurl } from '../../api/apiConfig';
 
 
 
@@ -23,7 +24,7 @@ function Login() {
         console.log(data);
         axios({
           method: 'post',
-          url: `https://internal.microtek.tech:8443/v1/api/mhere/login`,
+          url: `${baseurl.base_url}/mhere/login`,
           headers: {
             'Content-Type': 'application/json',
           },
@@ -57,7 +58,7 @@ function Login() {
               }
               axios({
                 method:"post",
-                url:`https://internal.microtek.tech:8443/v1/api/mhere/get-employee-module-access`,
+                url:`${baseurl.base_url}/mhere/get-employee-module-access`,
                 headers:{
                   "Content-Type": "application/json",
                   "Authorization": `Bearer ${localStorage.getItem('token')}`
@@ -67,6 +68,19 @@ function Login() {
               .then((res)=>{
                 console.log(res);
                 if(res.data.data?.qrapp){
+                  let data ={
+                    employee_id:response.data.new_e_code,
+                    module_name:"qrapp"
+                  }
+                  axios({
+                    method:"post",
+                    url:`${baseurl.base_url}/mhere/log-login`,
+                    headers:{
+                      "Content-Type": "application/json",
+                      "Authorization": `Bearer ${localStorage.getItem('token')}`
+                    },
+                    data
+                  })
                     navigate('/')
                     window.location.reload()
                 }
