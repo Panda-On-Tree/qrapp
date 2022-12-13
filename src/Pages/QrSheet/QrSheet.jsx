@@ -39,7 +39,7 @@ function QrSheet() {
             reader.readAsArrayBuffer(e.target.files[0]);
         }
     };
-    const componentRef = useRef();
+    
 
         function upload(){
             console.log(uploadFile);
