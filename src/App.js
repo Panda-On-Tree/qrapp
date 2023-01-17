@@ -26,8 +26,8 @@ function App() {
     <div className="App">
       <Routes>
         <Route element={<Dashboard />}>
-          <Route exact path="/"  element={localStorage.getItem("token") ? (JSON.parse(localStorage.getItem("module_access")).qr_gen?<QrSheet />: <Navigate replace to="/makeqr" /> ): <Navigate replace to="/login" />}></Route>
-          <Route exact path="/makeqr" element={localStorage.getItem("token") ?(JSON.parse(localStorage.getItem("module_access")).scan_to_qr?<QrMake />:<Navigate replace to="/login" />)  : <Navigate replace to="/login" />}></Route>
+          <Route exact path="/"  element={localStorage.getItem("token") ? (JSON.parse(localStorage.getItem("module_access"))?.qr_gen?<QrSheet />: <Navigate replace to="/makeqr" /> ): <Navigate replace to="/login" />}></Route>
+          <Route exact path="/makeqr" element={localStorage.getItem("token") ?(JSON.parse(localStorage.getItem("module_access"))?.scan_to_qr?<QrMake />:<Navigate replace to="/login" />)  : <Navigate replace to="/login" />}></Route>
         </Route>
         <Route element={<Auth />}>
           <Route exact path="/login" element={<Login />}></Route>

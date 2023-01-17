@@ -109,7 +109,7 @@ function Appbar() {
                     "aria-labelledby": "basic-button",
                   }}
                 >
-                  {JSON.parse(localStorage.getItem("module_access")).qr_gen ? (
+                  {JSON.parse(localStorage.getItem("module_access"))?.qr_gen ? (
                     <MenuItem
                       onClick={() => {
                         setSerial(null);
@@ -119,7 +119,7 @@ function Appbar() {
                       Qr Generate
                     </MenuItem>
                   ) : null}
-                  {JSON.parse(localStorage.getItem("module_access")).scan_to_qr ? (
+                  {JSON.parse(localStorage.getItem("module_access"))?.scan_to_qr ? (
                     <MenuItem
                       onClick={() => {
                         setSerial(null);
@@ -199,7 +199,7 @@ function Appbar() {
             </ListItem>
             <Collapse in={openListItemTwo} timeout="auto" unmountOnExit>
               <List component="div" disablePadding>
-                {JSON.parse(localStorage.getItem("module_access")).qr_gen ? (
+                {JSON.parse(localStorage.getItem("module_access"))?.qr_gen ? (
                   <ListItemButton
                     onClick={() => {
                       setSerial(null);
@@ -211,7 +211,7 @@ function Appbar() {
                     <ListItemText primary="QR Generate" />
                   </ListItemButton>
                 ) : null}
-                {JSON.parse(localStorage.getItem("module_access")).scan_to_qr ? (
+                {JSON.parse(localStorage.getItem("module_access"))?.scan_to_qr ? (
                   <ListItemButton
                     onClick={() => {
                       setSerial(null);
