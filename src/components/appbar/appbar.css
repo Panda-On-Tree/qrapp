@@ -1,0 +1,7 @@
+.navbar{
+    min-width: 100%;
+    margin-bottom: 10px;
+    position: relative;
+    z-index: 99;
+    height: 70px;
+}

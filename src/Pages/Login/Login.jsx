@@ -35,7 +35,7 @@ function Login() {
             localStorage.setItem('employee_id', response.data.new_e_code)
             localStorage.setItem('manager_id', response.data.reporting_manager_id)
             localStorage.setItem('token', response.data.token)
-            localStorage.setItem('fullname', response.data.name_of_the_employee)
+            localStorage.setItem('fullname', response.data.name_of_the_eployee)
             localStorage.setItem('email', response.data.email)
             localStorage.setItem('grade', response.data.grade)
             localStorage.setItem('band', response.data.band)
@@ -68,6 +68,7 @@ function Login() {
               .then((res)=>{
                 console.log(res);
                 if(res.data.data?.qrapp){
+                  localStorage.setItem('module_access', JSON.stringify(res.data.data))
                   let data ={
                     employee_id:response.data.new_e_code,
                     module_name:"qrapp"
@@ -81,8 +82,8 @@ function Login() {
                     },
                     data
                   })
-                    navigate('/')
-                    window.location.reload()
+                   navigate('/')
+                  window.location.reload()
                 }
                 else{
                     alert("module access not allowed")
