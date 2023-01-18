@@ -92,8 +92,9 @@ const QrMake = () => {
   function sendData() {
     const data = {
       serial_numbers: qrcodeValue,
-      sap_part_code: sapCode,
+      sap_part_code: sapCode ||"empty",
       employee_id: localStorage.getItem("employee_id"),
+      batch_no: batchNumber
     };
     console.log(data);
     axios({
