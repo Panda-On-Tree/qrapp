@@ -481,7 +481,7 @@ const QrMake = () => {
                       <Stack sx={{ justifyContent: "space-between", borderBottom: "1px solid black" }} direction="row" spacing={1}>
                         <Typography variant="body2">Vender Code -</Typography>
                         <Typography sx={{ fontWeight: 600 }} variant="body2">
-                          {localStorage.getItem("employee_id")}
+                          {localStorage.getItem("vendor_code")}
                         </Typography>
                       </Stack>
                       <Stack sx={{ justifyContent: "space-between" }} direction="row" spacing={1}>

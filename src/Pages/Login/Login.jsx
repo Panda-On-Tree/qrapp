@@ -41,6 +41,8 @@ function Login() {
             localStorage.setItem('band', response.data.band)
             localStorage.setItem('role', response.data.role)
             localStorage.setItem('department', response.data.department)
+            localStorage.setItem('vendor_code', response.data.employee_id)
+            
           /*   const data = {
                 module_name:"qr-app",
                 employee_id: response.data.new_e_code
