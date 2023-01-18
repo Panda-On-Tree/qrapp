@@ -48,14 +48,25 @@ const QrMake = () => {
     setActiveStep(0);
   };
 
+  function checkIfDuplicateExists(arr) {
+    return new Set(arr).size !== arr.length
+}
+
   const handleDebounce = useCallback(debounce(handleNext, 500), []);
   function handleNext() {
     const element = document.getElementById("outlined-multiline-flexible");
+   if(checkIfDuplicateExists(element.value.split("\n"))){
+     alert("Duplicate Value Found")
+      setQrcodeValue("")
+      lines.current=0;
+      return;
+   }
     if (lines.current + 1 == scanNo.current) {
       element.disabled = true;
       setDisabledButton(false);
       return;
     }
+    console.log(element.value.split("\n"));
     element.value += "\n";
     lines.current = lines.current + 1;
   }
@@ -84,6 +95,7 @@ const QrMake = () => {
       sap_part_code: sapCode,
       employee_id: localStorage.getItem("employee_id"),
     };
+    console.log(data);
     axios({
       method: "post",
       url: `${baseurl.base_url}/qrapp/log-serial-qr-record`,
