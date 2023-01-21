@@ -67,7 +67,7 @@ const QrMake = () => {
       return;
     }
     console.log(element.value.split("\n"));
-    element.value += "\n";
+   // element.value += "\n";
     lines.current = lines.current + 1;
   }
 
