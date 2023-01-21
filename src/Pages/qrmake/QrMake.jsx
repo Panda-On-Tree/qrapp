@@ -16,8 +16,8 @@ const QrMake = () => {
   const [productList, setProductList] = useState([]);
   const [modelList, setModelList] = useState([]);
   const [printSize, setPrintSize] = useState({
-    height: "50",
-    width: "100",
+    height: "25",
+    width: "50",
   });
   const [openDialog, setOpenDialog] = useState(false);
   const componentToPrint = useRef(null);
