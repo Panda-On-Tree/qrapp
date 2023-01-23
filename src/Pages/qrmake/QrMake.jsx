@@ -26,15 +26,15 @@ const QrMake = () => {
   useEffect(() => {
     fetchProductList();
   }, []);
-  const [scanNumber, setScanNumber] = useState()
+  const [scanNumber, setScanNumber] = useState();
   const scanNo = useRef(1);
   const lines = useRef(0);
   const [autocompData, setautocompData] = useState({
-    product:"",
-    model:""
-  })
+    product: "",
+    model: "",
+  });
   const [activeStep, setActiveStep] = useState(0);
-  const [batchNumber, setBatchNumber] = useState()
+  const [batchNumber, setBatchNumber] = useState();
 
   const handleNextStepper = () => {
     setActiveStep((prevActiveStep) => prevActiveStep + 1);
@@ -49,25 +49,30 @@ const QrMake = () => {
   };
 
   function checkIfDuplicateExists(arr) {
-    return new Set(arr).size !== arr.length
-}
+    return new Set(arr).size !== arr.length;
+  }
 
-  const handleDebounce = useCallback(debounce(handleNext, 500), []);
+  const handleDebounce = useCallback(debounce(handleNext, 250), []);
   function handleNext() {
     const element = document.getElementById("outlined-multiline-flexible");
-   if(checkIfDuplicateExists(element.value.split("\n"))){
-     alert("Duplicate Value Found")
-      setQrcodeValue("")
-      lines.current=0;
+    if (checkIfDuplicateExists(element.value.split("\n"))) {
+      alert("Duplicate Value Found");
+      setQrcodeValue("");
+      lines.current = 0;
       return;
-   }
-    if (lines.current-1 == scanNo.current) {
+    }
+    if (lines.current+1 == scanNo.current) {
       element.disabled = true;
       setDisabledButton(false);
       return;
     }
     console.log(element.value.split("\n"));
-   // element.value += "\n";
+    const values = element.value.split("\n")
+    if(values[values.length -1] == ''){
+    }
+    else{
+      element.value += "\n";
+    }
     lines.current = lines.current + 1;
   }
 
@@ -92,9 +97,9 @@ const QrMake = () => {
   function sendData() {
     const data = {
       serial_numbers: qrcodeValue,
-      sap_part_code: sapCode ||"empty",
+      sap_part_code: sapCode || "empty",
       employee_id: localStorage.getItem("employee_id"),
-      batch_no: batchNumber
+      batch_no: batchNumber,
     };
     console.log(data);
     axios({
@@ -138,7 +143,7 @@ const QrMake = () => {
       });
   }
 
-  function getBactchNumber(){
+  function getBactchNumber() {
     axios({
       method: "get",
       url: `${baseurl.base_url}/qrapp/get-next-batch-no`,
@@ -148,8 +153,8 @@ const QrMake = () => {
       },
     })
       .then((res) => {
-       console.log(res.data.data);
-       setBatchNumber(res.data.data.batch_no)
+        console.log(res.data.data);
+        setBatchNumber(res.data.data.batch_no);
       })
       .catch((err) => {
         console.log(err);
@@ -318,12 +323,11 @@ const QrMake = () => {
                   size="small"
                   value={autocompData.product || null}
                   className="autocomp-input"
-        
                   defaultValue=""
                   onChange={(event, newValue) => {
                     if (newValue?.id) {
                       fetchModelList(newValue?.id);
-                      setautocompData({...autocompData, product:newValue})
+                      setautocompData({ ...autocompData, product: newValue });
                     }
                   }}
                   disablePortal
@@ -347,7 +351,7 @@ const QrMake = () => {
                   value={autocompData.model || null}
                   onChange={(event, newValue) => {
                     if (newValue?.id) {
-                      setautocompData({...autocompData, model:newValue})
+                      setautocompData({ ...autocompData, model: newValue });
                       setSapCode(newValue.sap_part_code);
                     }
                   }}
@@ -371,9 +375,9 @@ const QrMake = () => {
                   size="small"
                   label="Enter Number"
                   type="number"
-                    value={scanNumber}
+                  value={scanNumber}
                   onChange={(e) => {
-                    setScanNumber(e.target.value)
+                    setScanNumber(e.target.value);
                     scanNo.current = e.target.value;
                   }}
                 ></TextField>
@@ -397,9 +401,9 @@ const QrMake = () => {
               </Button>
               <Button
                 variant="contained"
-                disabled={autocompData.model && autocompData.product && scanNumber?false:true}
+                disabled={autocompData.model && autocompData.product && scanNumber ? false : true}
                 onClick={() => {
-                  getBactchNumber()
+                  getBactchNumber();
                   handleNextStepper();
                   lines.current = 0;
                   setQrcodeValue("");
@@ -415,7 +419,7 @@ const QrMake = () => {
         ) : null}
         {activeStep === 1 ? (
           <React.Fragment>
-            <Box sx={{ mx: 4, display: "flex", gap: "40px",flexDirection:'column', flexWrap: "wrap", minWidth: "100%", mt: 5, minHeight: "50vh" }}>
+            <Box sx={{ mx: 4, display: "flex", gap: "40px", flexDirection: "column", flexWrap: "wrap", minWidth: "100%", mt: 5, minHeight: "50vh" }}>
               <Typography>Batch No. - {batchNumber}</Typography>
               <TextField
                 inputRef={inputRef}
@@ -434,6 +438,13 @@ const QrMake = () => {
                 multiline
                 value={qrcodeValue}
                 onChange={(e) => {
+                  if(qrcodeValue.split('\n').length > scanNo.current){
+                    document.getElementById("outlined-multiline-flexible").disabled = true
+                    console.log(scanNo.current-1);
+                    setQrcodeValue(qrcodeValue.split('\n').slice(0,scanNo.current).join("\n"));
+                    setDisabledButton(false)
+                    return
+                  }
                   setQrcodeValue(e.target.value.toUpperCase());
                   handleDebounce();
                 }}
@@ -444,7 +455,10 @@ const QrMake = () => {
               <Button onClick={handleBack} sx={{ mt: 1, mr: 1 }}>
                 Back
               </Button>
-              <Button disabled={disabledButton} variant="contained" onClick={handleNextStepper} sx={{ mt: 1, mr: 1 }}>
+              <Button disabled={disabledButton} variant="contained" onClick={()=>{
+                handleNextStepper();
+                console.log(qrcodeValue);
+              }} sx={{ mt: 1, mr: 1 }}>
                 Continue
               </Button>
             </Box>
@@ -453,8 +467,8 @@ const QrMake = () => {
         {activeStep === 2 ? (
           <React.Fragment>
             <Box sx={{ mx: 4, display: "flex", gap: "40px", flexWrap: "wrap", minWidth: "100%", mt: 5, minHeight: "50vh" }}>
-              <div className="sheets-inner" >
-                <div ref={(el) => (componentToPrint.current = el)} style={{ justifyContent: "space-around", height: `${printSize.height}mm`, width: `${printSize.width}mm`, padding:'2px' }} id="sheet" className="sheet sheet-resize">
+              <div className="sheets-inner">
+                <div ref={(el) => (componentToPrint.current = el)} style={{ justifyContent: "space-around", height: `${printSize.height}mm`, width: `${printSize.width}mm`, padding: "2px" }} id="sheet" className="sheet sheet-resize">
                   <div className="sheet-right-second">
                     <QRCodeSVG size={70} value={qrcodeValue} />
                     <h4></h4>
@@ -462,32 +476,42 @@ const QrMake = () => {
                   <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                     <Stack spacing={0}>
                       <Stack sx={{ justifyContent: "space-between", borderBottom: "1px solid black" }} direction="row" spacing={0}>
-                        <Typography sx={{fontSize:'8px'}} variant="body2">Batch Number -</Typography>
-                        <Typography sx={{ fontWeight: 600, fontSize:'8px' }} variant="body2">
+                        <Typography sx={{ fontSize: "8px" }} variant="body2">
+                          Batch Number -
+                        </Typography>
+                        <Typography sx={{ fontWeight: 600, fontSize: "8px" }} variant="body2">
                           {batchNumber}
                         </Typography>
                       </Stack>
                       <Stack sx={{ justifyContent: "space-between", borderBottom: "1px solid black" }} direction="row" spacing={0}>
-                        <Typography sx={{fontSize:'8px'}} variant="body2">Date -</Typography>
-                        <Typography sx={{ fontWeight: 600,fontSize:'8px' }} variant="body2">
+                        <Typography sx={{ fontSize: "8px" }} variant="body2">
+                          Date -
+                        </Typography>
+                        <Typography sx={{ fontWeight: 600, fontSize: "8px" }} variant="body2">
                           {date.getDate()}/{date.getMonth() + 1}/{`${date.getFullYear()}`}
                         </Typography>
                       </Stack>
                       <Stack sx={{ justifyContent: "space-between", borderBottom: "1px solid black" }} direction="row" spacing={0}>
-                        <Typography sx={{fontSize:'8px'}} variant="body2">PartCode -</Typography>
-                        <Typography sx={{ fontWeight: 600.,fontSize:'8px' }} variant="body2">
+                        <Typography sx={{ fontSize: "8px" }} variant="body2">
+                          PartCode -
+                        </Typography>
+                        <Typography sx={{ fontWeight: 600, fontSize: "8px" }} variant="body2">
                           {sapCode}
                         </Typography>
                       </Stack>
                       <Stack sx={{ justifyContent: "space-between", borderBottom: "1px solid black" }} direction="row" spacing={0}>
-                        <Typography sx={{fontSize:'8px'}} variant="body2">Vender Code -</Typography>
-                        <Typography sx={{ fontWeight: 600,fontSize:'8px' }} variant="body2">
+                        <Typography sx={{ fontSize: "8px" }} variant="body2">
+                          Vender Code -
+                        </Typography>
+                        <Typography sx={{ fontWeight: 600, fontSize: "8px" }} variant="body2">
                           {localStorage.getItem("vendor_code")}
                         </Typography>
                       </Stack>
                       <Stack sx={{ justifyContent: "space-between" }} direction="row" spacing={0}>
-                        <Typography sx={{fontSize:'8px'}} variant="body2">Quantity -</Typography>
-                        <Typography sx={{ fontWeight: 600,fontSize:'8px' }} variant="body2">
+                        <Typography sx={{ fontSize: "8px" }} variant="body2">
+                          Quantity -
+                        </Typography>
+                        <Typography sx={{ fontWeight: 600, fontSize: "8px" }} variant="body2">
                           {scanNo.current}
                         </Typography>
                       </Stack>
@@ -513,10 +537,10 @@ const QrMake = () => {
                 </Button>
                 <ReactToPrint
                   onAfterPrint={() => {
-                    setActiveStep(0)
+                    setActiveStep(0);
                     setDisabledButton(true);
-                    setScanNumber("")
-            
+                    setScanNumber("");
+
                     sendData();
                     setQrcodeValue("");
                     lines.current = 0;
