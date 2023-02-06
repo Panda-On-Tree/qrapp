@@ -8,6 +8,7 @@ import QrMake from "./Pages/qrmake/QrMake";
 import Appbar from "./components/appbar/appbar";
 import axios from "axios";
 import { baseurl } from "./api/apiConfig";
+import { QrView } from "./Pages/qrView/QrView";
 
 function App() {
   let navigate = useNavigate()
@@ -59,6 +60,7 @@ function App() {
         <Route element={<Dashboard />}>
           <Route exact path="/"  element={localStorage.getItem("token") ? (JSON.parse(localStorage.getItem("module_access"))?.qr_gen?<QrSheet />: <Navigate replace to="/makeqr" /> ): <Navigate replace to="/login" />}></Route>
           <Route exact path="/makeqr" element={localStorage.getItem("token") ?(JSON.parse(localStorage.getItem("module_access"))?.scan_to_qr?<QrMake />:<Navigate replace to="/login" />)  : <Navigate replace to="/login" />}></Route>
+          <Route exact path="/qrview" element={localStorage.getItem("token") ?(JSON.parse(localStorage.getItem("module_access"))?.scan_to_qr?<QrView />:<Navigate replace to="/login" />)  : <Navigate replace to="/login" />}></Route>
         </Route>
         <Route element={<Auth />}>
           <Route exact path="/login" element={<Login />}></Route>

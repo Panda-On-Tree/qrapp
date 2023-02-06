@@ -561,6 +561,9 @@ const QrMake = () => {
           </React.Fragment>
         ) : null}
       </Box>
+      <Box>
+        
+      </Box>
 
       <Dialog onClose={() => setOpenDialog(false)} open={openDialog}>
         <DialogTitle id="alert-dialog-title">Set Height And Width (in mm)</DialogTitle>

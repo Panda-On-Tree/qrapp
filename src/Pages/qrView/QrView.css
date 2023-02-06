@@ -1,0 +1,70 @@
+
+.table-ceam *{
+    font-size: 12px;
+    color: black;
+    font-family: 'Noto Sans', sans-serif;
+  }
+  
+  .css-nfmglb-MuiTableCell-root{
+    padding: 2px !important;
+  }
+  
+  .MuiTableCell-body {
+    border-right: 1px solid rgba(224, 224, 224, 1);
+  }
+  
+  .css-1ygcj2i-MuiTableCell-root{
+    padding: 10px !important;
+  }
+  
+  .css-1w1rijm-MuiButtonBase-root-MuiButton-root{
+    padding: 0px !important;
+  }
+  
+  .css-1ex1afd-MuiTableCell-root{
+    padding: 12px 10px !important;
+  }
+  .tss-1cdcmys-MUIDataTable-responsiveBase{
+    z-index: 0 !important;
+  }
+  
+  .tss-1akey0g-MUIDataTableHeadCell-data {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+  .tss-10syd3x-MUIDataTableHeadCell-root{
+    font-weight: 600 !important;
+    white-space: nowrap;
+  }
+  .tss-qbo1l6-MUIDataTableToolbar-actions *{
+    color: rgb(82, 82, 82) !important;
+    font-size: 18px;
+  }
+  .css-15wwp11-MuiTableHead-root *{
+    color: rgb(44, 44, 44) !important;
+  }
+  .table-ceam .tss-hj53wm-MUIDataTableToolbar-titleText{
+    font-size: 16px;
+    font-family: 'Noto Sans', sans-serif;
+    font-weight: 600;
+  }
+  
+  .tss-9562fz-MUIDataTableViewCol-root {
+    padding: 16px 24px 16px 24px !important;
+    font-family: Roboto;
+  }
+  
+  
+  
+  @media only screen and (max-width: 350px) {
+    .tss-qbo1l6-MUIDataTableToolbar-actions{
+      display: none;
+    } 
+    .css-pdct74-MuiTablePagination-selectLabel{
+      display: none;
+    }
+    .css-16c50h-MuiInputBase-root-MuiTablePagination-select{
+      display: none !important;
+    }
+    
+  }
