@@ -35,11 +35,7 @@ input[type=number]::-webkit-outer-spin-button {
 .sheet-resize{
   /*   overflow: auto;
     resize: both; */
-    display: flex;
-    align-items: center;
-  
-   
-    
+
 }
 
 
@@ -56,5 +52,6 @@ textarea:focus{
 
 
 .qr-dime{
-
+    margin-top: 20px;
+    
 }
