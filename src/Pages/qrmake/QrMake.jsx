@@ -469,49 +469,49 @@ const QrMake = () => {
             <Box sx={{ mx: 4, display: "flex", gap: "40px", flexWrap: "wrap", minWidth: "100%", mt: 5, minHeight: "50vh" }}>
               <div className="sheets-inner">
                 <div ref={(el) => (componentToPrint.current = el)} style={{ justifyContent: "space-around", height: `${printSize.height}mm`, width: `${printSize.width}mm`, padding: "2px" }} id="sheet" className="sheet sheet-resize">
-                  <div className="sheet-right-second">
+                  <div className="sheet-right-second qr-dime">
                     <QRCodeSVG size={70} value={qrcodeValue} />
-                    <h4></h4>
+                    
                   </div>
                   <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
                     <Stack spacing={0}>
                       <Stack sx={{ justifyContent: "space-between", borderBottom: "1px solid black" }} direction="row" spacing={0}>
-                        <Typography sx={{ fontSize: "8px" }} variant="body2">
+                        <Typography sx={{ fontSize: "10px" }} variant="body2">
                           Batch Number -
                         </Typography>
-                        <Typography sx={{ fontWeight: 600, fontSize: "8px" }} variant="body2">
+                        <Typography sx={{ fontWeight: 600, fontSize: "10px" }} variant="body2">
                           {batchNumber}
                         </Typography>
                       </Stack>
                       <Stack sx={{ justifyContent: "space-between", borderBottom: "1px solid black" }} direction="row" spacing={0}>
-                        <Typography sx={{ fontSize: "8px" }} variant="body2">
+                        <Typography sx={{ fontSize: "10px" }} variant="body2">
                           Date -
                         </Typography>
-                        <Typography sx={{ fontWeight: 600, fontSize: "8px" }} variant="body2">
+                        <Typography sx={{ fontWeight: 600, fontSize: "10px" }} variant="body2">
                           {date.getDate()}/{date.getMonth() + 1}/{`${date.getFullYear()}`}
                         </Typography>
                       </Stack>
                       <Stack sx={{ justifyContent: "space-between", borderBottom: "1px solid black" }} direction="row" spacing={0}>
-                        <Typography sx={{ fontSize: "8px" }} variant="body2">
+                        <Typography sx={{ fontSize: "10px" }} variant="body2">
                           PartCode -
                         </Typography>
-                        <Typography sx={{ fontWeight: 600, fontSize: "8px" }} variant="body2">
+                        <Typography sx={{ fontWeight: 600, fontSize: "10px" }} variant="body2">
                           {sapCode}
                         </Typography>
                       </Stack>
                       <Stack sx={{ justifyContent: "space-between", borderBottom: "1px solid black" }} direction="row" spacing={0}>
-                        <Typography sx={{ fontSize: "8px" }} variant="body2">
+                        <Typography sx={{ fontSize: "10px" }} variant="body2">
                           Vender Code -
                         </Typography>
-                        <Typography sx={{ fontWeight: 600, fontSize: "8px" }} variant="body2">
+                        <Typography sx={{ fontWeight: 600, fontSize: "10px" }} variant="body2">
                           {localStorage.getItem("vendor_code")}
                         </Typography>
                       </Stack>
                       <Stack sx={{ justifyContent: "space-between" }} direction="row" spacing={0}>
-                        <Typography sx={{ fontSize: "8px" }} variant="body2">
+                        <Typography sx={{ fontSize: "10px" }} variant="body2">
                           Quantity -
                         </Typography>
-                        <Typography sx={{ fontWeight: 600, fontSize: "8px" }} variant="body2">
+                        <Typography sx={{ fontWeight: 600, fontSize: "10px" }} variant="body2">
                           {scanNo.current}
                         </Typography>
                       </Stack>
