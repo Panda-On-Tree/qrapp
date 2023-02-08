@@ -162,6 +162,8 @@ const QrMake = () => {
         // toast.error(err.response.data.message);
       });
   }
+  //console.log(`abc\r\nxyz\r\n`);
+
 
   return (
     <div>
@@ -319,7 +321,9 @@ const QrMake = () => {
                     setDisabledButton(false)
                     return
                   }
-                  setQrcodeValue(e.target.value.toUpperCase());
+                  /* console.log(e.target.value.split("\n").join("\u000D"));
+                  console.log("abc\nxyz\n"); */
+                  setQrcodeValue(e.target.value.split("\n").join("\u000D\n"));
                   handleDebounce();
                 }}
               />
