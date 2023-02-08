@@ -10,18 +10,19 @@ import ReactToPrint from "react-to-print";
 
 const QrMake = () => {
   const [date, setDate] = useState(new Date());
-
+  const font_size = '16px';
   const [disabledButton, setDisabledButton] = useState(true);
   const [qrcodeValue, setQrcodeValue] = useState();
   const [productList, setProductList] = useState([]);
   const [modelList, setModelList] = useState([]);
   const [printSize, setPrintSize] = useState({
-    height: "25",
-    width: "50",
+    height: "50",
+    width: "75",
   });
   const [openDialog, setOpenDialog] = useState(false);
   const componentToPrint = useRef(null);
   const inputRef = useRef();
+  
   const [sapCode, setSapCode] = useState("");
   useEffect(() => {
     fetchProductList();
@@ -164,133 +165,6 @@ const QrMake = () => {
 
   return (
     <div>
-      {/*  <Box sx={{ px: 2, pb: 1, display: "flex", gap: "40px", flexWrap: "wrap" }}>
-        <Autocomplete
-          size="small"
-          className="autocomp-input"
-          onChange={(event, newValue) => {
-            if (newValue?.id) {
-              fetchModelList(newValue?.id);
-            }
-          }}
-          disablePortal
-          id="combo-box-demo"
-          getOptionLabel={(option) => `${option.product_name} (${option.product_code})`}
-          options={productList}
-          sx={{ width: 280 }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Product Name"
-              inputProps={{
-                ...params.inputProps,
-              }}
-            />
-          )}
-        />
-        <Autocomplete
-          size="small"
-          className="autocomp-input"
-          onChange={(event, newValue) => {
-            if (newValue?.id) {
-              setSapCode(newValue.sap_part_code);
-            }
-          }}
-          disablePortal
-          id="combo-box-demo"
-          getOptionLabel={(option) => `${option.model_name} (${option.model_code}) \n SAP-${option.sap_part_code}`}
-          options={modelList}
-          sx={{ width: 280 }}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Model Name"
-              inputProps={{
-                ...params.inputProps,
-              }}
-            />
-          )}
-        />
-
-        <TextField
-          size="small"
-          label="Enter Number"
-          type="number"
-          onChange={(e) => {
-            scanNo.current = e.target.value;
-          }}
-        ></TextField>
-        <Button
-          sx={{ minWidth: "100px" }}
-          variant="contained"
-          onClick={() => {
-            lines.current = 0;
-            setQrcodeValue("");
-            document.getElementById("outlined-multiline-flexible").disabled = false;
-            inputRef.current.focus();
-          }}
-        >
-          Set
-        </Button>
-        <Button
-          color="warning"
-          onClick={() => {
-            setOpenDialog(true);
-          }}
-          variant="contained"
-        >
-          Print Settings
-        </Button>
-      </Box> */}
-      {/*  <Box sx={{ p: 2, display: "flex", gap: "40px", alignItems: "flex-start", flexWrap: "wrap" }}>
-        <TextField
-          inputRef={inputRef}
-          sx={{
-            width: "250px",
-            "& .css-dpjnhs-MuiInputBase-root-MuiOutlinedInput-root": {
-              padding: "8px",
-            },
-            "& .MuiInputBase-inputMultiline": {
-              textTransform: "uppercase",
-            },
-          }}
-          id="outlined-multiline-flexible"
-          multiline
-          value={qrcodeValue}
-          onChange={(e) => {
-            setQrcodeValue(e.target.value.toUpperCase());
-            handleDebounce();
-          }}
-        />
-        <ReactToPrint
-          onAfterPrint={() => {
-            setDisabledButton(true);
-
-            sendData();
-            setQrcodeValue("");
-            lines.current = 0;
-            document.getElementById("outlined-multiline-flexible").disabled = false;
-            inputRef.current.focus();
-          }}
-          trigger={() => {
-            return (
-              <Button disabled={disabledButton} id={"print"} variant="contained">
-                {"Print"}
-              </Button>
-            );
-          }}
-          content={() => componentToPrint.current}
-        />
-      </Box> */}
-      {/*  <p style={{ marginLeft: "20px" }} id="height-data"></p>
-      <div className="sheets-inner">
-        <div ref={(el) => (componentToPrint.current = el)} style={{ justifyContent: "space-around", height: `${printSize.height}mm`, width: `${printSize.width}mm` }} id="sheet" className="sheet sheet-resize">
-          <div className="sheet-right-second">
-            <QRCodeSVG size={80} value={qrcodeValue} />
-            <h4></h4>
-          </div>
-        </div>
-      </div> */}
       <Box sx={{ width: "90%", ml: 5 }}>
         <Stepper activeStep={activeStep}>
           <Step>
@@ -468,50 +342,50 @@ const QrMake = () => {
           <React.Fragment>
             <Box sx={{ mx: 4, display: "flex", gap: "40px", flexWrap: "wrap", minWidth: "100%", mt: 5, minHeight: "50vh" }}>
               <div className="sheets-inner">
-                <div ref={(el) => (componentToPrint.current = el)} style={{ justifyContent: "space-around", height: `${printSize.height}mm`, width: `${printSize.width}mm`, padding: "1px" }} id="sheet" className="sheet sheet-resize">
+                <div ref={(el) => (componentToPrint.current = el)} style={{display:'flex',gap:'10px',alignItems:'center', justifyContent: "space-between", height: `${printSize.height}mm`, width: `${printSize.width}mm`, padding: "10px" }} id="sheet" className="sheet sheet-resize">
                   <div className="sheet-right-second qr-dime">
                     <QRCodeSVG size={70} value={qrcodeValue} />
                     
                   </div>
-                  <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center" }}>
-                    <Stack spacing={0}>
+                  <Box sx={{ display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center", flexGrow:1 }}>
+                    <Stack sx={{width:'100%'}} spacing={0}>
                       <Stack sx={{ justifyContent: "space-between", borderBottom: "1px solid black" }} direction="row" spacing={0}>
-                        <Typography sx={{ fontSize: "11px" }} variant="body2">
+                        <Typography sx={{ fontSize: font_size }} variant="body2">
                           Batch Number -
                         </Typography>
-                        <Typography sx={{ fontWeight: 600, fontSize: "11px" }} variant="body2">
+                        <Typography sx={{ fontWeight: 600, fontSize: font_size }} variant="body2">
                           {batchNumber}
                         </Typography>
                       </Stack>
                       <Stack sx={{ justifyContent: "space-between", borderBottom: "1px solid black" }} direction="row" spacing={0}>
-                        <Typography sx={{ fontSize: "11px" }} variant="body2">
+                        <Typography sx={{ fontSize: font_size }} variant="body2">
                           Date -
                         </Typography>
-                        <Typography sx={{ fontWeight: 600, fontSize: "11px" }} variant="body2">
+                        <Typography sx={{ fontWeight: 600, fontSize: font_size }} variant="body2">
                           {date.getDate()}/{date.getMonth() + 1}/{`${date.getFullYear()}`}
                         </Typography>
                       </Stack>
-                      <Stack sx={{ justifyContent: "space-between", borderBottom: "1px solid black" }} direction="row" spacing={0}>
-                        <Typography sx={{ fontSize: "11px" }} variant="body2">
+                      <Stack sx={{ justifyContent: "space-between", borderBottom: "1px solid black", alignItems:'center' }} direction="row" spacing={0}>
+                        <Typography sx={{ fontSize: font_size }} variant="body2">
                           PartCode -
                         </Typography>
-                        <Typography sx={{ fontWeight: 600, fontSize: "11px" }} variant="body2">
+                        <Typography sx={{ fontWeight: 600, fontSize: '13px' }} variant="body2">
                           {sapCode}
                         </Typography>
                       </Stack>
                       <Stack sx={{ justifyContent: "space-between", borderBottom: "1px solid black" }} direction="row" spacing={0}>
-                        <Typography sx={{ fontSize: "11px" }} variant="body2">
+                        <Typography sx={{ fontSize: "16px" }} variant="body2">
                           Vender Code -
                         </Typography>
-                        <Typography sx={{ fontWeight: 600, fontSize: "11px" }} variant="body2">
+                        <Typography sx={{ fontWeight: 600, fontSize: "16px" }} variant="body2">
                           {localStorage.getItem("vendor_code")}
                         </Typography>
                       </Stack>
                       <Stack sx={{ justifyContent: "space-between" }} direction="row" spacing={0}>
-                        <Typography sx={{ fontSize: "11px" }} variant="body2">
+                        <Typography sx={{ fontSize: font_size }} variant="body2">
                           Quantity -
                         </Typography>
-                        <Typography sx={{ fontWeight: 600, fontSize: "11px" }} variant="body2">
+                        <Typography sx={{ fontWeight: 600, fontSize: font_size }} variant="body2">
                           {scanNo.current}
                         </Typography>
                       </Stack>
